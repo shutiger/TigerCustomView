@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LineCustomView">
+        <attr name="Line_paint_width" format="dimension"/>
+        <attr name="Line_paint_color" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="RaysCustomView">
+        <attr name="Rays_paint_color" format="color" />
+        <attr name="Rays_inner_radius" format="dimension" />
+        <attr name="Rays_outer_radius" format="dimension" />
+    </declare-styleable>
+</resources>
