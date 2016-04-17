@@ -20,10 +20,10 @@ public class RaysCustomView extends View {
     private int mCenterHeight; //view高度的中心
     private int mInnerRadius = 100; //内圈半径
     private int mOuterRadius = 400; //外圈半径
-    private int mRayCount = 15; //射线的数量
+    private int mRayCount = 20; //射线的数量
     private double mDegree = 360 / (mRayCount * 2); //每条射线的角度
     private int mRayColor = Color.GREEN; //射线颜色
-    private Path mPath;
+    private Path mPath;//一条射线（一个小梯形）的边路径
 
     public RaysCustomView(Context context) {
         this(context, null);
@@ -44,8 +44,11 @@ public class RaysCustomView extends View {
     }
 
     private void initPaint(Context context, AttributeSet attrs) {
+        //初始化画笔的属性
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RaysCustomView);
-        mRayCount = typedArray.getInteger(R.styleable.RaysCustomView_Rays_count, 15);
+        mRayCount = typedArray.getInteger(R.styleable.RaysCustomView_Rays_count, 20);
+        mDegree = 360 / (mRayCount * 2);
+        mRayColor = typedArray.getColor(R.styleable.RaysCustomView_Rays_paint_color, Color.GREEN);
 
         mPaint = new Paint();
         mPaint.setColor(mRayColor);
@@ -56,17 +59,20 @@ public class RaysCustomView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //获取自定义view的中心位置点
         mCenterWidth = canvas.getWidth() / 2;
         mCenterHeight = canvas.getHeight() / 2;
 
-        mPath.moveTo(mCenterWidth, mCenterHeight - mInnerRadius);
-        mPath.lineTo(mCenterWidth, mCenterHeight - mOuterRadius);
+        //一条射线即一个小梯形的路径
+        mPath.moveTo(mCenterWidth, mCenterHeight - mInnerRadius); //移动到起始点
+        mPath.lineTo(mCenterWidth, mCenterHeight - mOuterRadius); //画线
         mPath.lineTo((float) (mCenterWidth + (Math.sin(Math.toRadians(mDegree)) * mOuterRadius))
-                , (float) (mCenterHeight - (Math.cos(Math.toRadians(mDegree)) * mOuterRadius)));
+                , (float) (mCenterHeight - (Math.cos(Math.toRadians(mDegree)) * mOuterRadius))); //画线
         mPath.lineTo((float) (mCenterWidth + (Math.sin(Math.toRadians(mDegree)) * mInnerRadius))
-                , (float) (mCenterHeight - (Math.cos(Math.toRadians(mDegree)) * mInnerRadius)));
-        mPath.close();
+                , (float) (mCenterHeight - (Math.cos(Math.toRadians(mDegree)) * mInnerRadius))); //画线
+        mPath.close(); //回到起点闭合
 
+        //循环画出所有梯形射线
         for (int i = 0; i < mRayCount; i++) {
             canvas.save();
             canvas.rotate((float)(2 * i * mDegree), mCenterWidth, mCenterHeight);

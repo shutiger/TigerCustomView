@@ -7,6 +7,7 @@
     <android.app.tigercustomview.customviews.RaysCustomView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:Rays_count="20"
+        app:Rays_count="36"
+        app:Rays_paint_color="#FFB045BE"
     />
 </LinearLayout>
