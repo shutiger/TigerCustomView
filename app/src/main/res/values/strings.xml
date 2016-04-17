@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TigerCustomView</string>
+    <string name="btn_line_custom_view">LineCustomView</string>
+    <string name="btn_rays_custom_view">RaysCustomView</string>
 </resources>

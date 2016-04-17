@@ -8,5 +8,6 @@
         <attr name="Rays_paint_color" format="color" />
         <attr name="Rays_inner_radius" format="dimension" />
         <attr name="Rays_outer_radius" format="dimension" />
+        <attr name="Rays_count" format="integer" />
     </declare-styleable>
 </resources>

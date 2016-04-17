@@ -1,3 +1,3 @@
 ﻿# TigerCustomView
 虎哥带你学自定义view
-test
+http://blog.csdn.net/tiger_shenmie/article/category/6174893

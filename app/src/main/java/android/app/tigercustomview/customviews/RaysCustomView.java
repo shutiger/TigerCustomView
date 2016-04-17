@@ -1,11 +1,14 @@
 package android.app.tigercustomview.customviews;
 
+import android.app.tigercustomview.R;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -14,11 +17,13 @@ import android.view.View;
 public class RaysCustomView extends View {
     private Paint mPaint;
     private int mCenterWidth; //view宽度的中心
-    private int mCenterHeight; //view
+    private int mCenterHeight; //view高度的中心
     private int mInnerRadius = 100; //内圈半径
     private int mOuterRadius = 400; //外圈半径
-    private int mRayCount = 32; //射线的数量
-    private double mDegree = 360 / mRayCount; //每条射线的角度
+    private int mRayCount = 15; //射线的数量
+    private double mDegree = 360 / (mRayCount * 2); //每条射线的角度
+    private int mRayColor = Color.GREEN; //射线颜色
+    private Path mPath;
 
     public RaysCustomView(Context context) {
         this(context, null);
@@ -30,13 +35,20 @@ public class RaysCustomView extends View {
 
     public RaysCustomView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initPaint(attrs);
+        init(context, attrs);
     }
 
-    private void initPaint(AttributeSet attrs) {
+    private void init(Context context, AttributeSet attrs) {
+        mPath = new Path();
+        initPaint(context, attrs);
+    }
+
+    private void initPaint(Context context, AttributeSet attrs) {
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RaysCustomView);
+        mRayCount = typedArray.getInteger(R.styleable.RaysCustomView_Rays_count, 15);
+
         mPaint = new Paint();
-//        mPaint.setColor(Color.GREEN);
-        mPaint.setColor(Color.parseColor("#ecc35c"));
+        mPaint.setColor(mRayColor);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeWidth(5);
         mPaint.setAntiAlias(true);
@@ -47,20 +59,18 @@ public class RaysCustomView extends View {
         mCenterWidth = canvas.getWidth() / 2;
         mCenterHeight = canvas.getHeight() / 2;
 
-        Path path = new Path();
-        path.moveTo(mCenterWidth, mCenterHeight - mInnerRadius);
-        path.lineTo(mCenterWidth, mCenterHeight - mOuterRadius);
-        path.lineTo((float) (mCenterWidth + (Math.sin(Math.toRadians(mDegree)) * mOuterRadius))
+        mPath.moveTo(mCenterWidth, mCenterHeight - mInnerRadius);
+        mPath.lineTo(mCenterWidth, mCenterHeight - mOuterRadius);
+        mPath.lineTo((float) (mCenterWidth + (Math.sin(Math.toRadians(mDegree)) * mOuterRadius))
                 , (float) (mCenterHeight - (Math.cos(Math.toRadians(mDegree)) * mOuterRadius)));
-        path.lineTo((float) (mCenterWidth + (Math.sin(Math.toRadians(mDegree)) * mInnerRadius))
+        mPath.lineTo((float) (mCenterWidth + (Math.sin(Math.toRadians(mDegree)) * mInnerRadius))
                 , (float) (mCenterHeight - (Math.cos(Math.toRadians(mDegree)) * mInnerRadius)));
-        path.lineTo(mCenterWidth, mCenterHeight - mInnerRadius);
-        path.close();
+        mPath.close();
 
-        for (int i=0; i<16; i++) {
+        for (int i = 0; i < mRayCount; i++) {
             canvas.save();
             canvas.rotate((float)(2 * i * mDegree), mCenterWidth, mCenterHeight);
-            canvas.drawPath(path, mPaint);
+            canvas.drawPath(mPath, mPaint);
             canvas.restore();
         }
     }
