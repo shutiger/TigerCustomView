@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".activitys.LineCustomViewActivity" />
         <activity android:name=".activitys.RaysCustomViewActivity" />
+        <activity android:name=".activitys.LoadingCustomViewActivity" />
     </application>
 
 </manifest>

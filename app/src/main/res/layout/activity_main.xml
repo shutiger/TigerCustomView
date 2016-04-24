@@ -20,4 +20,11 @@
         android:text="@string/btn_rays_custom_view"
         android:textAllCaps="false"
         />
+    <Button
+        android:id="@+id/id_loading_custom_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_loading_custom_view"
+        android:textAllCaps="false"
+        />
 </LinearLayout>
