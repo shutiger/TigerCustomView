@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 
-
 /**
  * Created by Administrator on 2016/4/21.
  */
@@ -29,7 +28,7 @@ public class LoadingCustomView extends View {
         , Color.CYAN
         , Color.BLUE
         , Color.RED
-};
+    };
     private int colorIndex = 0;
 
     private Handler mHandle = new Handler(new Handler.Callback() {
@@ -82,9 +81,8 @@ public class LoadingCustomView extends View {
         mPaint.setAntiAlias(true);
         mHandle.sendEmptyMessage(UPDATE_PROGRESS);
 
-        //内存泄露
-        //占用线程资源
     }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
